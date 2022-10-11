@@ -94,7 +94,7 @@ from publicnewsarchive import newsData
 
 listOfPastURLs = newsData.getPastURLs(year='2022', newspaper_url='https://publico.pt/') 
 
-newsData.getNewsArticles(fontPages=listOfPastURLs, newspaper_url='https://publico.pt/', news_htmlTag='div',
+newsData.getNewsArticles(pastURLs=listOfPastURLs, newspaper_url='https://publico.pt/', news_htmlTag='div',
                  news_htmlClass='entry-text-content', titles_htmlTag='h2', titles_htmlClass='entry-title', snippets_htmlTag='p',
                  snippets_htmlClass='', links_htmlTag='a', links_htmlClass='', authors_htmlTag='',
                  authors_htmlClass='', output_path='samples\\newsPublico2022', debug=True)
@@ -231,7 +231,7 @@ from publicnewsarchive import newsData
 
 listOfPastURLs = newsData.getPastURLs(year='2022', newspaper_url='https://publico.pt/') 
 
-newsData.getNewsArticles(fontPages=listOfPastURLs, newspaper_url='https://publico.pt/', news_htmlTag='div',
+newsData.getNewsArticles(pastURLs=listOfPastURLs, newspaper_url='https://publico.pt/', news_htmlTag='div',
                  news_htmlClass='entry-text-content', titles_htmlTag='h2', titles_htmlClass='entry-title', snippets_htmlTag='p',
                  snippets_htmlClass='', links_htmlTag='a', links_htmlClass='', authors_htmlTag='',
                  authors_htmlClass='', output_path='samples\\newsPublico2022', debug=True)
