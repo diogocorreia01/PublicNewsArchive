@@ -48,7 +48,7 @@ To get URLs from the past, we need to use the ‘getPastURLs’ method, which wi
 ```python
 from publicnewsarchive import newsData
 
-listOfPastURLs = newsData.getPastURLs(year='2022' , newspaper_url='https://www.publico.pt')
+listOfPastURLs = newsData.getPastURLs(year='2022', newspaper_url='https://publico.pt/', startMonth='06', endMonth='07')
 
 print(listOfPastURLs)
 ```
@@ -92,12 +92,12 @@ Now that we have the covers of the newspaper, it is possible to extract the news
 
 from publicnewsarchive import newsData 
 
-listOfPastURLs = newsData.getPastURLs(year='2022', newspaper_url='https://publico.pt/') 
+listOfPastURLs = newsData.getPastURLs(year='2022', newspaper_url='https://publico.pt/', startMonth='06', endMonth='07')
 
 newsData.getNewsArticles(pastURLs=listOfPastURLs, newspaper_url='https://publico.pt/', news_htmlTag='div',
-                 news_htmlClass='entry-text-content', titles_htmlTag='h2', titles_htmlClass='entry-title', snippets_htmlTag='p',
-                 snippets_htmlClass='', links_htmlTag='a', links_htmlClass='', authors_htmlTag='',
-                 authors_htmlClass='', output_path='samples\\newsPublico2022', debug=True)
+                 news_htmlClass='card__inner', titles_htmlTag='h4', titles_htmlClass='kicker', snippets_htmlTag='h3',
+                 snippets_htmlClass='card__title headline', links_htmlTag='a', links_htmlClass='card__faux-block-link', authors_htmlTag='span',
+                 authors_htmlClass='byline__name', output_path='samples\\newsPublico2022', debug=True)
 ```
 or
 ```python
@@ -229,12 +229,12 @@ After extracting all possible news, we can use the `getNewsData()` method to ext
 ```python
 from publicnewsarchive import newsData
 
-listOfPastURLs = newsData.getPastURLs(year='2022', newspaper_url='https://publico.pt/') 
+listOfPastURLs = newsData.getPastURLs(year='2022', newspaper_url='https://publico.pt/', startMonth='06', endMonth='07')
 
 newsData.getNewsArticles(pastURLs=listOfPastURLs, newspaper_url='https://publico.pt/', news_htmlTag='div',
-                 news_htmlClass='entry-text-content', titles_htmlTag='h2', titles_htmlClass='entry-title', snippets_htmlTag='p',
-                 snippets_htmlClass='', links_htmlTag='a', links_htmlClass='', authors_htmlTag='',
-                 authors_htmlClass='', output_path='samples\\newsPublico2022', debug=True)
+                 news_htmlClass='card__inner', titles_htmlTag='h4', titles_htmlClass='kicker', snippets_htmlTag='h3',
+                 snippets_htmlClass='card__title headline', links_htmlTag='a', links_htmlClass='card__faux-block-link', authors_htmlTag='span',
+                 authors_htmlClass='byline__name', output_path='samples\\newsPublico2022', debug=True)
 
 newsData.getNewsData(json_news='samples\\newsPublico2022.json', output_path='samples\\newsPublicoData2022')
 ```
@@ -272,7 +272,7 @@ Using the `newsWordcloud()` method we can easily create a Wordcloud with the mos
 ```python
 from publicnewsarchive import newsAnalysis
 
-newsAnalysis.newsWordcloud(json_news='samples\\newsPublicoData2022.json', output_path='samples\\newsWordcloudPublico2022')
+newsAnalysis.newsWordcloud(json_news='samples\\newsPublicoData2022.json', output_path='samples\\wordcloudPublico2022')
 ```
 
 ### **Create an interactive map with the locations**
@@ -290,7 +290,7 @@ Using the `newsMap()` method we can easily create an interactive map with all th
 ```python
 from publicnewsarchive import newsAnalysis
 
-newsAnalysis.newsMap(json_news='samples\\newsPublicoData2022.json', output_path='samples\\newsWordcloudPublico2022', api_key='GOOGLE_MAPS_API_KEY_HERE')
+newsAnalysis.newsMap(json_news='samples\\newsPublicoData2022.json', output_path='samples\\mapPublico2022', api_key='AIzaSyDoygTYvzCb_NTl51WNoWI57y5TZ6e15u4')
 ```
 
 ## **Related projects**
