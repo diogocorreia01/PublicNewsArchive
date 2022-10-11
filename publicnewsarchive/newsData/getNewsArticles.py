@@ -2,10 +2,10 @@ import requests
 from bs4 import BeautifulSoup
 import json
 
-def getNewsArticles(fontPages, newspaper_url, news_htmlTag, news_htmlClass, titles_htmlTag, titles_htmlClass, snippets_htmlTag, snippets_htmlClass,
+def getNewsArticles(pastURLs, newspaper_url, news_htmlTag, news_htmlClass, titles_htmlTag, titles_htmlClass, snippets_htmlTag, snippets_htmlClass,
              links_htmlTag, links_htmlClass, authors_htmlTag, authors_htmlClass, output_path, debug=False):
-    urls = fontPages
-    print('Total of Font Pages: ' + str(len(urls)))
+    urls = pastURLs
+    print('Total of Past URLs: ' + str(len(urls)))
 
     if newspaper_url.startswith('https://') or newspaper_url.startswith('http://'):
         newspaper_url = newspaper_url.replace('https://', '')

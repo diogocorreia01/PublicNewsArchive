@@ -4,10 +4,10 @@ This module allows you to get and analyze news from <a href="https://arquivo.pt/
 
 ## **Main Features**
 
-* Get Past Covers from Newspapers
-* Get Past News from Newspapers
-* Get Deep Data from the News (Title, Snippet, Link, Author, Date, Locations, Organizations, People and Keywords)
-* News Analysis
+* Get Past URLs from specific media outlets
+* Get Past News Articles from media outlets
+* Get Detailed Information from each of the collected News Articles (Title, Snippet, Link, Author, Date, Locations, Organizations, People and Keywords)
+* Get Insights from News Articles
 
 ## **Installation**
 ArchiveNews is available through GitHub.
@@ -29,35 +29,39 @@ from publicnewsarchive import newsData
 from publicnewsarchive import newsAnalysis
 ```
 
-## **Getting Font Pages**
+## **Get Past URL**
 
-To extract the covers of the news, we need to use the 'getCovers' function, which will extract the covers of the newspapers through the Arquivo.pt API.
+To get URLs from the past, we need to use the ‘getPastURLs’ method, which will extract the past URLs of the newspapers through the Arquivo.pt API.
 
 *Function options:*
 
-`years` - here you can indicate the year that you want to recover the covers.
+`years` - here you should indicate the year from which you want to collect past news articles.
 
-`output_path` - here you must indicate the path where the json file with the covers will be saved.
+`output_path` - here you must indicate the path where the json file with the past URLs will be saved.
 
-`newspaper_url` - here you must indicate the link of the newspaper that you want to retrieve the covers.
+`newspaper_url` - here you must specify the URL of the media outlet from which you want to collect past preserved URLs.
+
+`startMonth` (optional) - here you can indicate the start month from wich you want to collect past news articles. (Default value is 1 (January))
+
+`endMonth` (optional) - here you can indicate the end month from wich you want to collect past news articles. (Default value is 12 (December))
 
 ```python
 from publicnewsarchive import newsData
 
-listOfFontPages = newsData.getFontPages(year='2022' , newspaper_url='https://www.publico.pt')
+listOfPastURLs = newsData.getPastURLs(year='2022' , newspaper_url='https://www.publico.pt')
 
-print(listOfFontPages)
+print(listOfPastURLs)
 ```
 
-## **Getting News Articles**
+## **Get News Articles**
 
-Now that we have the covers of the newspaper, it is possible to extract the news that are on them. There are 2 ways to do this, the first one is to use the `getNews()` function present in the package, this function works correctly for most newspapers but in some cases it may not present good results, the another option is to do the web scraping manually.
+Now that we have the covers of the newspaper, it is possible to extract the news that are on them. There are 2 ways to do this, the first one is to use the `getNewsArticles()` method present in the package, this function works correctly for most newspapers but in some cases it may not present good results, the another option is to do the web scraping manually.
 
 *Function options:*
 
 `input_file` - Here is placed the json file previously created by extracting the covers.
 
-`newspaper_url` - here you must indicate the link of the newspaper that you want to retrieve the covers.
+`newspaper_url` - here you must specify the URL of the media outlet from which you want to collect past preserved URLs.
 
 `news_htmlTag` - HTML Tag for web scraping.
 
@@ -79,16 +83,18 @@ Now that we have the covers of the newspaper, it is possible to extract the news
 
 `authors_htmlClass` - HTML Author Class for web scraping.
 
-`output_path` - here you must indicate the path where the json file with the covers will be saved.
+`output_path` - here you must indicate the path where the json file with the past URLs will be saved.
+
+`debug` (optional) - Here you can indicate if you want to see the outputs of your webscraping or not. (Default value is False)
 
 ```python
 # Using the function
 
 from publicnewsarchive import newsData 
 
-listOfFontPages = newsData.getFontPages(year='2022', newspaper_url='https://publico.pt/') #Funcional com todos os jornais de teste
+listOfPastURLs = newsData.getPastURLs(year='2022', newspaper_url='https://publico.pt/') 
 
-newsData.getNewsArticles(fontPages=listOfFontPages, newspaper_url='https://publico.pt/', news_htmlTag='div',
+newsData.getNewsArticles(fontPages=listOfPastURLs, newspaper_url='https://publico.pt/', news_htmlTag='div',
                  news_htmlClass='entry-text-content', titles_htmlTag='h2', titles_htmlClass='entry-title', snippets_htmlTag='p',
                  snippets_htmlClass='', links_htmlTag='a', links_htmlClass='', authors_htmlTag='',
                  authors_htmlClass='', output_path='samples\\newsPublico2022', debug=True)
@@ -101,7 +107,7 @@ import requests
 from bs4 import BeautifulSoup
 import json
 
-# Load the Json file with the Covers
+# Load the Json file with the Past URLs
 jsonFile = open(f'Samples\\CoverSample.json', 'r')
 urls = json.load(jsonFile)
 
@@ -208,9 +214,9 @@ for i in range(len(urls)):
     print('Total News Found: ' + str(len(titles_no_reps)))
 ```
 
-## **Getting News Data**
+## **Get News Data**
 
-After extracting all possible news, we can use the `getNewsData()` function to extract the dates, locations, organizations, people and keywords in each one of the news. At the moment it only works in Portuguese language texts but we are working on to make it possible to use this function in several languages.
+After extracting all possible news, we can use the `getNewsData()` method to extract the dates, locations, organizations, people and keywords in each one of the news. At the moment it only works in Portuguese language texts but we are working on to make it possible to use this function in several languages.
 
 *Function options:*
 
@@ -218,46 +224,75 @@ After extracting all possible news, we can use the `getNewsData()` function to e
 
 `lang` - here you must choose the language in which the news text is. (only `pt` available)
 
-`output_path` - here you must indicate the path where the json file with the covers will be saved.
+`output_path` - here you must indicate the path where the json file with the news data will be saved.
 
 ```python
 from publicnewsarchive import newsData
 
-listOfFontPages = newsData.getFontPages(year='2022', newspaper_url='https://publico.pt/') #Funcional com todos os jornais de teste
+listOfPastURLs = newsData.getPastURLs(year='2022', newspaper_url='https://publico.pt/') 
 
-newsData.getNewsArticles(fontPages=listOfFontPages, newspaper_url='https://publico.pt/', news_htmlTag='div',
+newsData.getNewsArticles(fontPages=listOfPastURLs, newspaper_url='https://publico.pt/', news_htmlTag='div',
                  news_htmlClass='entry-text-content', titles_htmlTag='h2', titles_htmlClass='entry-title', snippets_htmlTag='p',
                  snippets_htmlClass='', links_htmlTag='a', links_htmlClass='', authors_htmlTag='',
                  authors_htmlClass='', output_path='samples\\newsPublico2022', debug=True)
 
-newsData.getNewsData(json_news='samples\\newsOMirante2022.json', output_path='samples\\newsPublicoData2022')
+newsData.getNewsData(json_news='samples\\newsPublico2022.json', output_path='samples\\newsPublicoData2022')
 ```
 
-## **News Analysis**
+## **Get Insights from News Articles**
 
 With all of the news data extracted, we now have the possibility to easily analyze this data using the `newsAnalysis` module of the package.
 
 ### **News Data per Year**
 
-Using the `dataPerYear()` function we can easily find out which places, organizations and people were most talked about in the news during that year.
+Using the `dataPerYear()` method we can easily find out which places, organizations and people were most talked about in the news during that year.
+
+*Function options:*
+
+`json_news` - Here is placed the json file previously created by extracting the news data.
+
+`output_path` - here you must indicate the path where the json file with the news data per year will be saved.
 
 ```python
-from publicnewsarchive import newsData
 from publicnewsarchive import newsAnalysis
 
-listOfFontPages = newsData.getFontPages(year='2022', newspaper_url='https://publico.pt/') #Funcional com todos os jornais de teste
-
-newsData.getNewsArticles(fontPages=listOfFontPages, newspaper_url='https://publico.pt/', news_htmlTag='div',
-                 news_htmlClass='entry-text-content', titles_htmlTag='h2', titles_htmlClass='entry-title', snippets_htmlTag='p',
-                 snippets_htmlClass='', links_htmlTag='a', links_htmlClass='', authors_htmlTag='',
-                 authors_htmlClass='', output_path='samples\\newsPublico2022', debug=True)
-
-newsData.getNewsData(json_news='samples\\newsOMirante2022.json', output_path='samples\\newsPublicoData2022')
-
 newsAnalysis.dataPerYear(json_news='samples\\newsPublicoData2022.json', output_path='samples\\newsDataPerYearPublico2022')
+```
+
+### **Wordcloud**
+
+Using the `newsWordcloud()` method we can easily create a Wordcloud with the most important keywords found on the news.
+
+*Function options:*
+
+`json_news` - Here is placed the json file previously created by extracting the news data.
+
+`output_path` - here you must indicate the path where the png file with the Wordcloud will be saved.
+
+```python
+from publicnewsarchive import newsAnalysis
+
+newsAnalysis.newsWordcloud(json_news='samples\\newsPublicoData2022.json', output_path='samples\\newsWordcloudPublico2022')
+```
+
+### **Create an interactive map with the locations**
+
+Using the `newsMap()` method we can easily create an interactive map with all the locations mentioned on the news.
+
+*Function options:*
+
+`json_news` - Here is placed the json file previously created by extracting the news data.
+
+`output_path` - here you must indicate the path where the html file with the interactive map will be saved.
+
+`api_key` - here you must indicate the api key from Google Maps.
+
+```python
+from publicnewsarchive import newsAnalysis
+
+newsAnalysis.newsMap(json_news='samples\\newsPublicoData2022.json', output_path='samples\\newsWordcloudPublico2022', api_key='GOOGLE_MAPS_API_KEY_HERE')
 ```
 
 ## **Related projects**
 
 ``Arquivo Publico`` - <a href="https://arquivopublico.ipt.pt/" target="_blank">Arquivo Publico</a> is the first usage of this module, the module was used to get the last 10 years News from Publico newspaper and analise them.
-
