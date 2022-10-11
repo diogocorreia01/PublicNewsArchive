@@ -53,7 +53,7 @@ listOfPastURLs = newsData.getPastURLs(year='2022' , newspaper_url='https://www.p
 print(listOfPastURLs)
 ```
 
-## **Get News Articles**
+## **Get Past News Articles**
 
 Now that we have the covers of the newspaper, it is possible to extract the news that are on them. There are 2 ways to do this, the first one is to use the `getNewsArticles()` method present in the package, this function works correctly for most newspapers but in some cases it may not present good results, the another option is to do the web scraping manually.
 
