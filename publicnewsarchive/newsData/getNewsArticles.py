@@ -106,30 +106,16 @@ def getNewsArticles(pastURLs, newspaper_url, news_htmlTag, news_htmlClass, title
         x = x + 1
 
     news = []
-    links_no_reps2 = []
 
     for i in range(len(links_no_reps)):
-        if links_no_reps[i].startswith('https://' + newspaper_url):
-            links_no_reps2.append('https://arquivo.pt/wayback/' + links_no_reps[i])
-        elif links_no_reps[i].startswith('http://' + newspaper_url):
-            links_no_reps2.append('https://arquivo.pt/wayback/' + links_no_reps[i])
-        elif links_no_reps[i].startswith('//' + newspaper_url):
-            links_no_reps2.append('https://arquivo.pt/wayback' + links_no_reps[i])
-        elif links_no_reps[i].startswith('https://www.publico.pt//noFrame/replay/' + newspaper_url):
-            links_no_reps2.append('https://arquivo.pt/wayback/' + links_no_reps[i])
-        elif links_no_reps[i].startswith('www.publico.pt//noFrame/replay/' + newspaper_url):
-            links_no_reps2.append('https://arquivo.pt/wayback/' + links_no_reps[i])
-        elif links_no_reps[i].startswith('https://arquivo.pt/noFrame/replay/'):
-            links_no_reps[i] = links_no_reps[i].replace('https://arquivo.pt/noFrame/replay/', '')
-            links_no_reps2.append('https://arquivo.pt/wayback/' + links_no_reps[i])
-        else:
-            links_no_reps2.append('https://arquivo.pt/wayback/https://' + newspaper_url + links_no_reps[i])
+        if links_no_reps[i].startswith('/noFrame/replay/'):
+            links_no_reps[i] = links_no_reps[i].replace('/noFrame/replay/', 'https://arquivo.pt/wayback/')
 
     for i in range(len(titles_no_reps)):
         news.append({
             'Title': titles_no_reps[i],
             'Snippet': snippets_no_reps[i],
-            'Link': links_no_reps2[i],
+            'Link': links_no_reps[i],
             'Author': authors_no_reps[i],
         })
 
