@@ -2,20 +2,20 @@
 
 This module allows you to get and analyze news from <a href="https://arquivo.pt/" target="_blank">Arquivo.pt</a>
 
-## **Main Features**
-
-* Get Past URLs from specific media outlets
-* Get Past News Articles from media outlets
-* Get Detailed Information from each of the collected News Articles (Title, Snippet, Link, Author, Date, Locations, Organizations, People and Keywords)
-* Get Insights from News Articles
-
-
 * Newspapers that were tested in the package development:
     * <a href="https://www.publico.pt/" target="_blank">Público</a>
     * <a href="https://omirante.pt/" target="_blank">O Mirante</a>
     * <a href="https://www.jn.pt/" target="_blank">Jornal de Notícias</a>
     * <a href="https://www.dn.pt/" target="_blank">Diário de Notícias</a>
     * <a href="https://www.cmjornal.pt/" target="_blank">Correio da Manhã</a>
+
+
+## **Main Features**
+
+* Get Past URLs from specific media outlets
+* Get Past News Articles from media outlets
+* Get Detailed Information from each of the collected News Articles (Title, Snippet, Link, Author, Date, Locations, Organizations, People and Keywords)
+* Get Insights from News Articles
 
 ## **Installation**
 ArchiveNews is available through GitHub.
