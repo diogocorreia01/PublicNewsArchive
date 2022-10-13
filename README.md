@@ -29,7 +29,7 @@ from publicnewsarchive import newsData
 from publicnewsarchive import newsAnalysis
 ```
 
-## **Get Past URL**
+## **Get Past URLs**
 
 To get URLs from the past, we need to use the ‘getPastURLs’ method, which will extract the past URLs of the newspapers through the Arquivo.pt API.
 
@@ -55,11 +55,11 @@ print(listOfPastURLs)
 
 ## **Get Past News Articles**
 
-Now that we have the covers of the newspaper, it is possible to extract the news that are on them. There are 2 ways to do this, the first one is to use the `getNewsArticles()` method present in the package, this function works correctly for most newspapers but in some cases it may not present good results, the another option is to do the web scraping manually.
+Now that we have the Past URLs of the newspaper, we are able to extract the news articles that are on them. By using the `getNewsArticles()` method it's possible to do Webscraping in an easy way, that allow us to easily get the news articles.
 
 *Function options:*
 
-`input_file` - Here is placed the json file previously created by extracting the covers.
+`input_file` - Here is placed the json file previously created by extracting the Past URLs.
 
 `newspaper_url` - here you must specify the URL of the media outlet from which you want to collect past preserved URLs.
 
@@ -99,128 +99,14 @@ newsData.getNewsArticles(pastURLs=listOfPastURLs, newspaper_url='https://publico
                  snippets_htmlClass='card__title headline', links_htmlTag='a', links_htmlClass='card__faux-block-link', authors_htmlTag='span',
                  authors_htmlClass='byline__name', output_path='samples\\newsPublico2022', debug=True)
 ```
-or
-```python
-# Manual Web Scrapping
-
-import requests
-from bs4 import BeautifulSoup
-import json
-
-# Load the Json file with the Past URLs
-jsonFile = open(f'Samples\\CoverSample.json', 'r')
-urls = json.load(jsonFile)
-
-# Lists for the values
-titles = []
-snippets = []
-links = []
-authors = []
-
-# List for the values (with no repeated news)
-links_no_reps = []
-titles_no_reps = []
-snippets_no_reps = []
-authors_no_reps = []
-
-for i in range(len(urls)): 
-    page = requests.get(urls[i])
-    soup = BeautifulSoup(page.content, 'html.parser', from_encoding="UTF-8")
-    ListOfTagContents = soup.find_all('news_htmlTag', class_='news_htmlClass')
-
-    for content in ListOfTagContents:
-        try:
-            titles.append(content.find('titles_htmlTag', class_='titles_htmlClass').get_text())
-        except:
-            titles.append(' ')
-
-    for content in ListOfTagContents:
-        try:
-            snippets.append(content.find('snippets_htmlTag', class_='snippets_htmlClass').get_text())
-        except:
-            snippets.append(' ')
-
-    for content in ListOfTagContents:
-        try:
-            links.append(content.find('links_htmlTag', 'links_htmlClass').get("href"))
-        except:
-            links.append(' ')
-
-    for content in ListOfTagContents:
-        try:
-            authors.append(content.find('authors_htmlTag', class_='authors_htmlClass').get_text())
-        except:
-            authors.append(' ')
-
-    # For Loop to remove all of the repetead news 
-    for link in links:
-        if link not in links_no_reps:
-            links_no_reps.append(link)
-            titles_no_reps.append(titles[links.index(link)])
-            snippets_no_reps.append(snippets[links.index(link)])
-            authors_no_reps.append(authors[links.index(link)])
-
-    # Remove some of the spaces that can be found on the Titles, Snippets, Links and Authors
-    for i in range(len(links_no_reps)):
-        try:
-            titles_no_reps[i] = titles_no_reps[i].replace('\n', '')
-            titles_no_reps[i] = titles_no_reps[i].replace('\r', '')
-            titles_no_reps[i] = titles_no_reps[i].replace('\r\n', '')
-            titles_no_reps[i] = titles_no_reps[i].replace('\n\r', '')
-            titles_no_reps[i] = titles_no_reps[i].replace('    ', '')
-        except:
-            pass
-
-        try:
-            snippets_no_reps[i] = snippets_no_reps[i].replace('\n', '')
-            snippets_no_reps[i] = snippets_no_reps[i].replace('\r', '')
-            snippets_no_reps[i] = snippets_no_reps[i].replace('\r\n', '')
-            snippets_no_reps[i] = snippets_no_reps[i].replace('\n\r', '')
-            snippets_no_reps[i] = snippets_no_reps[i].replace('    ', '')
-        except:
-            pass
-
-        try:
-            links_no_reps[i] = links_no_reps[i].replace('\n', '')
-            links_no_reps[i] = links_no_reps[i].replace('\r', '')
-            links_no_reps[i] = links_no_reps[i].replace('\r\n', '')
-            links_no_reps[i] = links_no_reps[i].replace('\n\r', '')
-            links_no_reps[i] = links_no_reps[i].replace('    ', '')
-        except:
-            pass
-
-        try:
-            authors_no_reps[i] = authors_no_reps[i].replace('\n', '')
-            authors_no_reps[i] = authors_no_reps[i].replace('\r', '')
-            authors_no_reps[i] = authors_no_reps[i].replace('\r\n', '')
-            authors_no_reps[i] = authors_no_reps[i].replace('\n\r', '')
-            authors_no_reps[i] = authors_no_reps[i].replace('    ', '')
-        except:
-            pass
-    
-    # Create Json File 
-    news = []
-    for i in range(len(titles_no_reps)):
-        news.append({
-            'Title': titles_no_reps[i],
-            'Snippet': snippets_no_reps[i],
-            'Link': links_no_reps[i],
-            'Author': authors_no_reps[i],
-        })
-
-    with open(f'Output File', 'w') as fp:
-        json.dump(news, fp, indent=4)
-
-    print('Total News Found: ' + str(len(titles_no_reps)))
-```
 
 ## **Get News Data**
 
-After extracting all possible news, we can use the `getNewsData()` method to extract the dates, locations, organizations, people and keywords in each one of the news. At the moment it only works in Portuguese language texts but we are working on to make it possible to use this function in several languages.
+After extracting every possible news article from the Past URLs, we can now use the `getNewsData()` method to extract the dates, locations, organizations, people and keywords in each one of the news articles. At the moment it only works in Portuguese language texts but we are working on to make it possible to use this function in several languages.
 
 *Function options:*
 
-`json_news` - Here is placed the json file previously created by extracting the news.
+`json_news` - Here is placed the json file previously created by extracting the news articles.
 
 `lang` - here you must choose the language in which the news text is. (only `pt` available)
 
@@ -241,11 +127,11 @@ newsData.getNewsData(json_news='samples\\newsPublico2022.json', output_path='sam
 
 ## **Get Insights from News Articles**
 
-With all of the news data extracted, we now have the possibility to easily analyze this data using the `newsAnalysis` module of the package.
+With all the news data extracted, we now have the possibility to easily analyze it, by using the `newsAnalysis` module of the package.
 
 ### **News Data per Year**
 
-Using the `dataPerYear()` method we can easily find out which places, organizations and people were most talked about in the news during that year.
+Using the `dataPerYear()` method we can easily find out which locations, organizations and people were most talked about in the news articles that are in the json file.
 
 *Function options:*
 
@@ -261,7 +147,7 @@ newsAnalysis.dataPerYear(json_news='samples\\newsPublicoData2022.json', output_p
 
 ### **Wordcloud**
 
-Using the `newsWordcloud()` method we can easily create a Wordcloud with the most important keywords found on the news.
+Using the `newsWordcloud()` method we can easily create a Wordcloud with the most important keywords found on the news articles.
 
 *Function options:*
 
@@ -277,7 +163,7 @@ newsAnalysis.newsWordcloud(json_news='samples\\newsPublicoData2022.json', output
 
 ### **Create an interactive map with the locations**
 
-Using the `newsMap()` method we can easily create an interactive map with all the locations mentioned on the news.
+Using the `newsMap()` method we can easily create an interactive map with all the locations mentioned on the news articles.
 
 *Function options:*
 
