@@ -2,7 +2,7 @@
 
 This module allows you to get and analyze news from <a href="https://arquivo.pt/" target="_blank">Arquivo.pt</a>
 
-* Newspapers that were tested in the package development:
+* Newspapers that were tested during the package development:
     * <a href="https://www.publico.pt/" target="_blank">Público</a>
     * <a href="https://omirante.pt/" target="_blank">O Mirante</a>
     * <a href="https://www.jn.pt/" target="_blank">Jornal de Notícias</a>
