@@ -108,6 +108,13 @@ newsData.getNewsArticles(pastURLs=listOfPastURLs, newspaper_url='https://publico
                  authors_htmlClass='byline__name', output_path='samples\\newsPublico2022', debug=True)
 ```
 
+### **How is it possible for the method to perform Webscraping for so many different Newspapers?**
+
+Over the time the Newspapers have kept the same news presentation base (Tittle, Snippet, Link and Author). 
+
+Therefore, we have developed a generic method that does this Webscraping (Tittle, Snippet, Link and Author), by indicating the Tags and HTML Classes associated with the respective information.
+
+
 ### **Contribute to the package with your Webscraping**
 
 You can access the 'Scraping' folder in this package, where you will Webscraping made for some Newspapers.
