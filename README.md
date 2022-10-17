@@ -108,7 +108,7 @@ newsData.getNewsArticles(pastURLs=listOfPastURLs, newspaper_url='https://publico
                  authors_htmlClass='byline__name', output_path='samples\\newsPublico2022', debug=True)
 ```
 
-#### **Contribute to the package with your Webscraping**
+### **Contribute to the package with your Webscraping**
 
 You can access the 'Scraping' folder in this package, where you will Webscraping made for some Newspapers.
 
