@@ -108,6 +108,12 @@ newsData.getNewsArticles(pastURLs=listOfPastURLs, newspaper_url='https://publico
                  authors_htmlClass='byline__name', output_path='samples\\newsPublico2022', debug=True)
 ```
 
+#### **Contribute to the package with your Webscraping**
+
+You can access the 'Scraping' folder in this package, where you will Webscraping made for some Newspapers.
+
+You can also contribute with your own Webscraping, by adding it to that 'Scraping' folder.
+
 ## **Get News Data**
 
 After extracting every possible news article from the Past URLs, we can now use the `getNewsData()` method to extract the dates, locations, organizations, people and keywords in each one of the news articles. At the moment it only works in Portuguese language texts but we are working on to make it possible to use this function in several languages.
