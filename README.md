@@ -1,26 +1,29 @@
-# ``PublicNewsArchive 0.1``
+# ``# Arquivo Público (Public News Archive)``
 
-This module allows you to get and analyze news from <a href="https://arquivo.pt/" target="_blank">Arquivo.pt</a>
-
-* Newspapers that were tested during the package development:
-    * <a href="https://www.publico.pt/" target="_blank">Público</a>
-    * <a href="https://omirante.pt/" target="_blank">O Mirante</a>
-    * <a href="https://www.jn.pt/" target="_blank">Jornal de Notícias</a>
-    * <a href="https://www.dn.pt/" target="_blank">Diário de Notícias</a>
-    * <a href="https://www.cmjornal.pt/" target="_blank">Correio da Manhã</a>
-
+`Public News Archive` allows users to get and analyze a large scale of past news articles from the <a href="https://arquivo.pt/" target="_blank">Arquivo.pt</a>, the Portuguese web archiving infra-structure.
 
 ## **Main Features**
 
-* Get Past URLs from specific media outlets
-* Get Past News Articles from media outlets
-* Get Detailed Information from each of the collected News Articles (Title, Snippet, Link, Author, Date, Locations, Organizations, People and Keywords)
-* Get Insights from News Articles
+- Get past preserved URLs from specific media outlets;
+- Get past news articles from specific media outlets;
+- Get detailed information from each and for all the collected news articles, in particular their Title, Snippet, Link, Author, Date, referred Locations, Organizations, People and important Keywords.
+
+## Supported Media Outlets
+
+We have developed a generic method that works for a diverse set of newspapers, requiring users to only indicate the tags and the HTML classes of the base data (title, snippet, link and author). As for now, our package supports getting information from the following media outlets:
+
+- [Público](https://www.publico.pt/)
+- [Jornal de Notícias](https://www.jn.pt/)
+- [Diário de Notícias](https://www.dn.pt/)
+- [Correio da Manhã](https://www.cmjornal.pt/)
+- [O Mirante](https://omirante.pt/)
+
+Scripts needed to extract information from this media outlets can be found in the `scraping` folder. Users of the package are also challenged to test and to contribute with scripts that allow getting information from other local or national newspapers. Those scripts will be added to the `scraping` folder upon Pull Request.
 
 ## **Installation**
-ArchiveNews is available through GitHub.
+`Public News Archive` is available through GitHub.
 ```bash
-pip install git+https://github.com/diogocorreia01/PublicNewsArchive.git
+pip install git+https://github.com/diogocorreia01/PublicNewsArchive
 ```
 
 ## **Usage (Python)**
