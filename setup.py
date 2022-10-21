@@ -2,6 +2,7 @@ from codecs import open
 from os.path import join, abspath, dirname
 from setuptools import setup, find_packages
 import os
+import codecs
 
 requirementPath = 'requirements.txt'
 
@@ -12,7 +13,7 @@ if os.path.isfile(requirementPath):
 
 here = abspath(dirname(__file__))
 
-with open(join(here, 'README.md'), encoding='utf-8') as buff:
+with codecs.open(join(here, 'README.md'), encoding='utf-8', errors='ignore') as buff:
     long_description = buff.read()
 
 setup(
