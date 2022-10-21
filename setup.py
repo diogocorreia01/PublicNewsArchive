@@ -29,7 +29,7 @@ setup(
         'gmplot==1.4.1',
         'matplotlib==3.5.0',
         'numpy',
-        'pandas==1.5.0',
+        'pandas',
         'pt-core-news-lg @ https://github.com/explosion/spacy-models/releases/download/pt_core_news_lg-3.3.0/pt_core_news_lg-3.3.0-py3-none-any.whl',
         'requests==2.28.1',
         'spacy==3.3.0',
