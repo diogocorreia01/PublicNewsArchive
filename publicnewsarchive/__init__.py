@@ -1,2 +1,2 @@
-from publicnewsarchive import newsData
-from publicnewsarchive import newsAnalysis
+from publicnewsarchive import dataExtraction
+from publicnewsarchive import dataAnalysis

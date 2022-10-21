@@ -2,7 +2,7 @@
 
 `Public News Archive` allows users to get and analyze a large scale of past news articles from the <a href="https://arquivo.pt/" target="_blank">Arquivo.pt</a>, the Portuguese web archiving infra-structure.
 
-## **Main Features**
+## Main Features
 
 - Get past preserved URLs from specific media outlets;
 - Get past news articles from specific media outlets;
@@ -20,189 +20,171 @@ We have developed a generic method that works for a diverse set of newspapers, r
 
 Scripts needed to extract information from this media outlets can be found in the `scraping` folder. Users of the package are also challenged to test and to contribute with scripts that allow getting information from other local or national newspapers. Those scripts will be added to the `scraping` folder upon Pull Request.
 
-## **Installation**
+## Installation
 `Public News Archive` is available through GitHub.
 ```bash
 pip install git+https://github.com/diogocorreia01/PublicNewsArchive
 ```
 
-## **Usage (Python)**
+## Usage (Python)
 
-Now you just need to import the package
-
-```python
-import publicnewsarchive
-```
-or
+To start with, begin by importing `publicnewsarchive` as follows:
 
 ```python
-from publicnewsarchive import newsData
-from publicnewsarchive import newsAnalysis
+from publicnewsarchive import dataExtraction
 ```
 
-## **Get Past URLs**
+### Get Past Preserved URLs
 
-To get URLs from the past, we need to use the ‘getPastURLs’ method, which will extract the past URLs of the newspapers through the Arquivo.pt API.
-
-*Function options:*
-
-`years` - here you should indicate the year from which you want to collect past news articles.
-
-`output_path` - here you must indicate the path where the json file with the past URLs will be saved.
-
-`newspaper_url` - here you must specify the URL of the media outlet from which you want to collect past preserved URLs.
-
-`startMonth` (optional) - here you can indicate the start month from wich you want to collect past news articles. (Default value is 1 (January))
-
-`endMonth` (optional) - here you can indicate the end month from wich you want to collect past news articles. (Default value is 12 (December))
+To get URLs from the past, users of the package should resort to the `getPastURLs` method, which will build upon the Arquivo.pt [URL Search API](https://github.com/arquivo/pwa-technologies/wiki/Arquivo.pt-API) to extract past preserved URLs of a given newspaper. The following, exemplifies this process for the [Jornal Público](https://publico.pt/). Beyond the `newspaper_url`, users will also need to provide information concerning the `year` from which to get past URLs, the `startMonth` (default value is 1 - January) and the `endMonth` (default value is 12 - December) parameters.
 
 ```python
-from publicnewsarchive import newsData
+pastURLs = dataExtraction.getPastURLs(year='2021', newspaper_url='https://publico.pt/', startMonth='06', endMonth='07')
 
-listOfPastURLs = newsData.getPastURLs(year='2022', newspaper_url='https://publico.pt/', startMonth='06', endMonth='07')
-
-print(listOfPastURLs)
+print(len(pastURLs))
 ```
 
-## **Get Past News Articles**
+### Get Past News Articles
 
-Now that we have the Past URLs of the newspaper, we are able to extract the news articles that are on them. By using the `getNewsArticles()` method it's possible to do Webscraping in an easy way, that allow us to easily get the news articles.
+Now that we have the list of `Past URLs` for the specified newspaper, we are able to extract the news articles that can be found in each of the referred URLs. For this purpose, we have developed a generic method, `getNewsArticles()`, which allows users of the package to perform this web scraping process in an easy way, requiring them to only provide some sort of HTML tag information that is necessary to get the news articles features, that is the title, snippets, links and authors. Such information can be easily obtained by inspecting the corresponding newspaper webpage. 
 
-*Function options:*
+A list of the required parameters is given below with the corresponding description:
 
-`input_file` - Here is placed the json file previously created by extracting the Past URLs.
+- `pastURLs`: a list with the past preserved urls collected from the Arquivo.pt infrastructure
+- `news_htmlTag`: main news HTML tag
+- `news_htmlClass`: main news HTML class
+- `titles_htmlTag`: HTML Title tag
+- `titles_htmlClass`: HTML Title class
+- `snippets_htmlTag`: HTML Snippet tag
+- `snippets_htmlClass`: HTML Snippet class
+- `links_htmlTag`: HTML Link tag
+- `links_htmlClass`: HTML Link class
+- `authors_htmlTag`: HTML Author tag
+- `authors_htmlClass`: HTML Author class
+- `filename`: json filename where the information collected will be saved. Be aware that files are saved under a data folder.
+- `debug (optional)`: in case you want to follow up the webscraping progress. Default value is `False`.
 
-`newspaper_url` - here you must specify the URL of the media outlet from which you want to collect past preserved URLs.
-
-`news_htmlTag` - HTML Tag for web scraping.
-
-`news_htmlClass` - HTML Class for web scraping.
-
-`titles_htmlTag` - HTML Tittle Tag for web scraping.
-
-`titles_htmlClass` - HTML Tittle Class for web scraping.
-
-`snippets_htmlTag` - HTML Snippet Tag for web scraping.
-
-`snippets_htmlClass` - HTML Snippet Class for web scraping.
-
-`links_htmlTag` - HTML Link Tag for web scraping.
-
-`links_htmlClass` - HTML Link Class for web scraping.
-
-`authors_htmlTag` - HTML Author Tag for web scraping.
-
-`authors_htmlClass` - HTML Author Class for web scraping.
-
-`output_path` - here you must indicate the path where the json file with the past URLs will be saved.
-
-`debug` (optional) - Here you can indicate if you want to see the outputs of your webscraping or not. (Default value is False)
+The following image illustrates the inspection process for the snippet feature. As can been seen from the figure, the snippets tag is a `snippets_htmlTag='h3'`, while the html class is a `snippets_htmlClass='card__title headline'` (highlighted with blue color in the inspection panel).
 
 ```python
-# Using the function
+from IPython.display import Image
+Image('http://www.ccc.ipt.pt/~ricardo/images/PublicNewsArchive_1.jpg')
+```
 
-from publicnewsarchive import newsData 
+The following code exemplifies the `Get Past News Articles` process for the `Jornal Público` interface in the year 2021. For illustrative purposes, we are only passing the first URL collected in pastURLs parameter (`pastURLs[:1]`). Passing the full list will consume a considerable amount of time. Also note that the obtained news articles will be saved in the following filename `newsPublico2021.json` within the `data` folder (which will be automatically created by the program in the user's computer).
 
-listOfPastURLs = newsData.getPastURLs(year='2022', newspaper_url='https://publico.pt/', startMonth='06', endMonth='07')
-
-newsData.getNewsArticles(pastURLs=listOfPastURLs, newspaper_url='https://publico.pt/', news_htmlTag='div',
+```python
+dataExtraction.getNewsArticles(pastURLs=pastURLs[:1], news_htmlTag='div',
                  news_htmlClass='card__inner', titles_htmlTag='h4', titles_htmlClass='kicker', snippets_htmlTag='h3',
                  snippets_htmlClass='card__title headline', links_htmlTag='a', links_htmlClass='card__faux-block-link', authors_htmlTag='span',
-                 authors_htmlClass='byline__name', output_path='samples\\newsPublico2022', debug=True)
+                 authors_htmlClass='byline__name', filename='newsPublico2021.json', debug=True)
 ```
 
-### **How is it possible for the method to perform Webscraping for so many different Newspapers?**
+### Information Extraction
 
-Over the time the Newspapers have kept the same news presentation base (Tittle, Snippet, Link and Author). 
-
-Therefore, we have developed a generic method that does this Webscraping (Tittle, Snippet, Link and Author), by indicating the Tags and HTML Classes associated with the respective information.
-
-
-### **Contribute to the package with your Webscraping**
-
-You can access the 'Scraping' folder in this package, where you will Webscraping made for some Newspapers.
-
-You can also contribute with your own Webscraping, by adding it to that 'Scraping' folder.
-
-## **Get News Data**
-
-After extracting every possible news article from the Past URLs, we can now use the `getNewsData()` method to extract the dates, locations, organizations, people and keywords in each one of the news articles. At the moment it only works in Portuguese language texts but we are working on to make it possible to use this function in several languages.
-
-*Function options:*
-
-`json_news` - Here is placed the json file previously created by extracting the news articles.
-
-`lang` - here you must choose the language in which the news text is. (only `pt` available)
-
-`output_path` - here you must indicate the path where the json file with the news data will be saved.
+After extracting all the news articles from past preserved URLs, we can now use the `getNewsData()` method to extract further info from them. At the moment, we are collecting the date of publication of the news article, together with the most important [YAKE!](http://yake.inesctec.pt) keywords of every text and spacy named entities, such as locations, organizations, people and an image link of the most representative element of the text (image links are obtained from the Arquivo.pt [Image Search API](https://github.com/arquivo/pwa-technologies/wiki/ImageSearch-API-v1.1-(beta))). The following code illustrates this process. As can be observed, users are required to specify the input filename, where the colleted news articles were saved before (`newsPublico2021.json`), and the output, where the new information will be saved.
 
 ```python
-from publicnewsarchive import newsData
-
-listOfPastURLs = newsData.getPastURLs(year='2022', newspaper_url='https://publico.pt/', startMonth='06', endMonth='07')
-
-newsData.getNewsArticles(pastURLs=listOfPastURLs, newspaper_url='https://publico.pt/', news_htmlTag='div',
-                 news_htmlClass='card__inner', titles_htmlTag='h4', titles_htmlClass='kicker', snippets_htmlTag='h3',
-                 snippets_htmlClass='card__title headline', links_htmlTag='a', links_htmlClass='card__faux-block-link', authors_htmlTag='span',
-                 authors_htmlClass='byline__name', output_path='samples\\newsPublico2022', debug=True)
-
-newsData.getNewsData(json_news='samples\\newsPublico2022.json', output_path='samples\\newsPublicoData2022')
+dataExtraction.getNewsData(input_filename='newsPublico2021.json', output_filename='newsPublico2021_v1.json')
 ```
 
-## **Get Insights from News Articles**
+### News Article Analysis
 
-With all the news data extracted, we now have the possibility to easily analyze it, by using the `newsAnalysis` module of the package.
-
-### **News Data per Year**
-
-Using the `dataPerYear()` method we can easily find out which locations, organizations and people were most talked about in the news articles that are in the json file.
-
-*Function options:*
-
-`json_news` - Here is placed the json file previously created by extracting the news data.
-
-`output_path` - here you must indicate the path where the json file with the news data per year will be saved.
+With all the information extracted, we now have the chance to perform some data analysis. Please start by importing the following module:
 
 ```python
-from publicnewsarchive import newsAnalysis
-
-newsAnalysis.dataPerYear(json_news='samples\\newsPublicoData2022.json', output_path='samples\\newsDataPerYearPublico2022')
+from publicnewsarchive import dataAnalysis
 ```
 
-### **Wordcloud**
+#### Compute top-locations, organizations and people
 
-Using the `newsWordcloud()` method we can easily create a Wordcloud with the most important keywords found on the news articles.
-
-*Function options:*
-
-`json_news` - Here is placed the json file previously created by extracting the news data.
-
-`output_path` - here you must indicate the path where the png file with the Wordcloud will be saved.
+Using the `computeTopNERs()` method, we can easily find out which locations, organizations and people were most talked about in the news articles. The following code illustrates this process. The `input_filename` is the name of the file (that can be found in the `data` folder) with all the information obtained from the news articles. `output_filename` is the basename of the file that is going to be used as a basis for creating three files in the `data` folder: `output_filename_Locations.json`; `output_filename_Organizations.json`; `output_filename_People.json`. Each of these files will contain the occurrences of locations, organizations and people.
 
 ```python
-from publicnewsarchive import newsAnalysis
-
-newsAnalysis.newsWordcloud(json_news='samples\\newsPublicoData2022.json', output_path='samples\\wordcloudPublico2022')
+dataAnalysis.computeTopNERs(input_filename = 'newsPublico2021_v1.json', output_filename = 'newsPublico2021')
 ```
-
-### **Create an interactive map with the locations**
-
-Using the `newsMap()` method we can easily create an interactive map with all the locations mentioned on the news articles.
-
-*Function options:*
-
-`json_news` - Here is placed the json file previously created by extracting the news data.
-
-`output_path` - here you must indicate the path where the html file with the interactive map will be saved.
-
-`api_key` - here you must indicate the api key from Google Maps.
 
 ```python
-from publicnewsarchive import newsAnalysis
+import json
+from collections import Counter
 
-newsAnalysis.newsMap(json_news='samples\\newsPublicoData2022.json', output_path='samples\\mapPublico2022', api_key='AIzaSyDoygTYvzCb_NTl51WNoWI57y5TZ6e15u4')
+def computeTopNERs(input_filename, output_filename):
+    path = "data/"
+    
+    jsonFile = open(path + input_filename, encoding="utf8")
+    data = json.load(jsonFile)
+    
+    
+    Locations = []
+    Organizations = []
+    People = []
+    
+    for newsarticle in data:
+        for location in newsarticle['Locations']:
+            Locations.append(location.lower())
+        
+        for organization in newsarticle['Organizations']:
+            Organizations.append(organization.lower())
+        
+        for people in newsarticle['People']:
+            People.append(people.lower())
+    
+    #Count
+    counter_locations = Counter(Locations)
+    counter_locations_sorted = sorted(counter_locations.items(), key=lambda pair: pair[1], reverse=True)
+    
+    counter_organizations = Counter(Organizations)
+    counter_organizations_sorted = sorted(counter_organizations.items(), key=lambda pair: pair[1], reverse=True)
+    
+    counter_people = Counter(People)
+    counter_people_sorted = sorted(counter_people.items(), key=lambda pair: pair[1], reverse=True)
+        
+    # Output Locations Json File
+    with open(f'{path + output_filename}_Locations.json', 'w', encoding='utf8') as fp:
+        json.dump(counter_locations_sorted, fp, ensure_ascii=False)
+    
+    with open(f'{path + output_filename}_Organizations.json', 'w', encoding='utf8') as fp:
+        json.dump(counter_organizations_sorted, fp, indent=4, ensure_ascii=False)
+    
+    with open(f'{path + output_filename}_People.json', 'w', encoding='utf8') as fp:
+        json.dump(counter_people_sorted, fp, indent=4, ensure_ascii=False)
+    
+computeTopNERs(input_filename = 'newsPublico2021_v1.json', output_filename = 'newsPublico2021')
 ```
 
-## **Related projects**
+#### Word Cloud
 
-``Arquivo Publico`` - <a href="https://arquivopublico.ipt.pt/" target="_blank">Arquivo Publico</a> is the first usage of this module, the module was used to get the last 10 years News from Publico newspaper and analise them.
+Using the `newsWordcloud()` method, we can easily create a Wordcloud with the most important keywords found in the news articles. The `input_filename` is the name of the file (that can be found in the `data` folder) with all the information obtained from the news articles. `output_filename` is the name of the file where the wordcloud will be saved.
+
+```python
+dataAnalysis.newsWordcloud(input_filename='newsPublico2021_v1.json', output_filename='newsPublico2021_wordcloud.png')
+```
+
+#### Interactive Map
+
+Using the `newsMap()` method, we can easily create an interactive map with all the locations mentioned on the news articles. The `input_filename` is the name of the file (that can be found in the `data` folder) with all the information obtained from the news articles. `output_filename` is the name of the html file that will keep the Google Map with all the locations. Please be aware that such feature requires having access to an api_key. More information about it here: https://pypi.org/project/gmplot/
+
+The following code exemplifies how to create a map for the locations found in the 2021 news articles. Don't forget to specify your api_key.
+
+```python
+api_key = "SPECIFY KEY"
+dataAnalysis.newsMap(input_filename='newsPublico2021_v1.json', output_filename='mapPublico2021.html', api_key= api_key)
+```
+
+## Awards
+
+Third Place of the [Arquivo.pt Award 2022](https://sobre.arquivo.pt/en/meet-the-winners-of-the-arquivo-pt-award-2022/).
+
+```python
+from IPython.display import HTML
+HTML('<div align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/oivteyVgeew" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>')
+```
+
+## References
+
+Please cite the following works when using Public News Archive:
+
+## Media
+
+- [PÚBLICO ao longo do tempo](https://www.publico.pt/2022/07/22/ciencia/noticia/arquivo-parlamento-repositorio-quer-dar-visibilidade-narrativas-vida-politica-portuguesa-2013730)
+- [FCCN](https://www.fccn.pt/noticias/premio-arquivopt-2022-vencedores/)
