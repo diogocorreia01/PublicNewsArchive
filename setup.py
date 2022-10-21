@@ -6,7 +6,7 @@ import os
 requirementPath = 'requirements.txt'
 
 if os.path.isfile(requirementPath):
-    with open(requirementPath) as f:
+    with open(requirementPath, encoding='utf-8') as f:
         install_requires = f.read().splitlines()
         print(install_requires)
 
