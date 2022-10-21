@@ -1,4 +1,4 @@
-# ``# Arquivo Público (Public News Archive)``
+# ``Arquivo Público (Public News Archive)``
 
 `Public News Archive` allows users to get and analyze a large scale of past news articles from the <a href="https://arquivo.pt/" target="_blank">Arquivo.pt</a>, the Portuguese web archiving infra-structure.
 
