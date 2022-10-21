@@ -4,19 +4,6 @@ from setuptools import setup, find_packages
 import os
 
 requirementPath = 'requirements.txt'
-requirements = [
-    'requests',
-    'urllib3',
-    'spacy==3.3.0',
-    'pt-core-news-lg @ https://github.com/explosion/spacy-models/releases/download/pt_core_news_lg-3.3.0/pt_core_news_lg-3.3.0-py3-none-any.whl',
-    'date-guesser-rc @ git+https://github.com/rncampos/date_guesser',
-    'yake @ git+https://github.com/LIAAD/yake',
-    'pandas',
-    'gmplot',
-    'geopy',
-    'wordcloud',
-    'matplotlib',
-    'beautifulsoup4']
 
 if os.path.isfile(requirementPath):
     with open(requirementPath) as f:
@@ -41,5 +28,5 @@ setup(
     packages=find_packages(),
     license='LGPLv3',
     include_package_data=True,
-    install_requires=requirements
+    install_requires=install_requires
 )
