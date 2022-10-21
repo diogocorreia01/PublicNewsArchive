@@ -7,6 +7,7 @@
 - Get past preserved URLs from specific media outlets;
 - Get past news articles from specific media outlets;
 - Get detailed information from each and for all the collected news articles, in particular their Title, Snippet, Link, Author, Date, referred Locations, Organizations, People and important Keywords.
+- News Article Analysis: Compute top-frequency locations, organizations and people, plot word cloud and create interactive map with the locations.
 
 ## Supported Media Outlets
 
@@ -18,7 +19,7 @@ We have developed a generic method that works for a diverse set of newspapers, r
 - [Correio da Manhã](https://www.cmjornal.pt/)
 - [O Mirante](https://omirante.pt/)
 
-Scripts needed to extract information from this media outlets can be found in the `scraping` folder. Users of the package are also challenged to test and to contribute with scripts that allow getting information from other local or national newspapers. Those scripts will be added to the `scraping` folder upon Pull Request.
+Scripts required to extract information from this media outlets can be found in the `scraping` folder. Users of the package are also challenged to test and to contribute with scripts that allow getting information from other local or national newspapers. Those scripts will be added to the `scraping` folder upon Pull Request.
 
 ## Installation
 `Public News Archive` is available through GitHub.
@@ -33,6 +34,8 @@ To start with, begin by importing `publicnewsarchive` as follows:
 ```python
 from publicnewsarchive import dataExtraction
 ```
+
+## <u>Data Extraction</u>
 
 ### Get Past Preserved URLs
 
@@ -66,10 +69,7 @@ A list of the required parameters is given below with the corresponding descript
 
 The following image illustrates the inspection process for the snippet feature. As can been seen from the figure, the snippets tag is a `snippets_htmlTag='h3'`, while the html class is a `snippets_htmlClass='card__title headline'` (highlighted with blue color in the inspection panel).
 
-```python
-from IPython.display import Image
-Image('http://www.ccc.ipt.pt/~ricardo/images/PublicNewsArchive_1.jpg')
-```
+<img src="http://www.ccc.ipt.pt/~ricardo/images/PublicNewsArchive_1.jpg" alt="MarineGEO circle logo"/>
 
 The following code exemplifies the `Get Past News Articles` process for the `Jornal Público` interface in the year 2021. For illustrative purposes, we are only passing the first URL collected in pastURLs parameter (`pastURLs[:1]`). Passing the full list will consume a considerable amount of time. Also note that the obtained news articles will be saved in the following filename `newsPublico2021.json` within the `data` folder (which will be automatically created by the program in the user's computer).
 
@@ -87,6 +87,8 @@ After extracting all the news articles from past preserved URLs, we can now use 
 ```python
 dataExtraction.getNewsData(input_filename='newsPublico2021.json', output_filename='newsPublico2021_v1.json')
 ```
+
+## <u>Data Acquisition</u>
 
 ### News Article Analysis
 
@@ -175,10 +177,7 @@ dataAnalysis.newsMap(input_filename='newsPublico2021_v1.json', output_filename='
 
 Third Place of the [Arquivo.pt Award 2022](https://sobre.arquivo.pt/en/meet-the-winners-of-the-arquivo-pt-award-2022/).
 
-```python
-from IPython.display import HTML
-HTML('<div align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/oivteyVgeew" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>')
-```
+[Arquivo.pt Award 2022 Presentation](https://www.youtube.com/watch?v=8f4HBTsjLsE)
 
 ## References
 
