@@ -1,3 +1,0 @@
-from publicnewsarchive.newsData.getPastURLs import getPastURLs
-from publicnewsarchive.newsData.getNewsArticles import getNewsArticles
-from publicnewsarchive.newsData.getNewsData import getNewsData
