@@ -2,7 +2,9 @@
 
 `Public News Archive` allows users to get and analyze a large scale of past news articles from the <a href="https://arquivo.pt/" target="_blank">Arquivo.pt</a>, the Portuguese web archiving infra-structure.
 
-[<img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Colaboratory_SVG_Logo.svg" width="80px" alt="MarineGEO circle logo"/>](https://drive.google.com/file/d/1vTxP3_ZNCQd38VXOF0BIiK5muWiCI6ou/edit)
+Try Public News Archive on Google Colab:
+
+[<img src="https://i.imgur.com/6xSa3Zu.png" alt="MarineGEO circle logo" width="150px"/>](https://drive.google.com/file/d/1vTxP3_ZNCQd38VXOF0BIiK5muWiCI6ou/edit)
 
 ## Main Features
 
