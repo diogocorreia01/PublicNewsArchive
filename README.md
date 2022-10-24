@@ -4,7 +4,7 @@
 
 Try Public News Archive on Google Colab:
 
-[<img src="https://i.imgur.com/6xSa3Zu.png" alt="MarineGEO circle logo" width="150px"/>](https://drive.google.com/file/d/1vTxP3_ZNCQd38VXOF0BIiK5muWiCI6ou/edit)
+[<img src="https://i.imgur.com/6xSa3Zu.png" alt="MarineGEO circle logo" width="180px"/>](https://drive.google.com/file/d/1vTxP3_ZNCQd38VXOF0BIiK5muWiCI6ou/edit)
 
 ## Main Features
 
